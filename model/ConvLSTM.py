@@ -121,6 +121,7 @@ class ConvLSTM(nn.Module):
 
 if __name__ == '__main__':
     x = torch.rand((32, 10, 64, 128, 128))
+    # input_dim, hidden_dim, kernel_size, num_layers, batch_first = False, bias = True,return_all_layers = False
     convlstm = ConvLSTM(64, 16, (3, 3), 1, True, True, False)
     _, last_states = convlstm(x)
     h = last_states[0][0]  # 0 for layer index, 0 for h index
