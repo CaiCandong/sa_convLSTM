@@ -22,3 +22,4 @@ References:
 - https://github.com/MinNamgung/sa_convlstm
 - https://github.com/hyona-yu/SA-convlstm
 - Lin, Zhihui,. [《Self-Attention ConvLSTM for Spatiotemporal Prediction》](https://ojs.aaai.org/index.php/AAAI/article/view/6819)
+- https://github.com/jerrywn121/TianChi_AIEarth/tree/main/SAConvLSTM
