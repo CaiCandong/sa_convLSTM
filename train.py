@@ -12,6 +12,8 @@ from model.Encode2Decode import Encode2Decode
 from torch import optim
 from pathlib import Path
 
+from utils import save_images
+
 
 def split_train_val(dataset):
     idx = [i for i in range(len(dataset))]
@@ -34,7 +36,7 @@ def split_train_val(dataset):
 
 
 def train(model, train_dataloader, valid_dataloader, criterion, optimizer, device="cpu", epochs=10,
-          save_dir=Path("output")):
+          save_dir=Path("outputs")):
     n_total_steps = len(train_dataloader)
     train_losses = []
 
@@ -56,9 +58,11 @@ def train(model, train_dataloader, valid_dataloader, criterion, optimizer, devic
 
             train_losses.append(loss.item())
             print(
-                f'epoch {i + 1} / {epochs}, step {ite + 1}/{n_total_steps}, encode + decode loss = {loss.item():.4f}')
+                f'epoch {i + 1} / {epochs}, step {ite + 1}/{n_total_steps}, loss = {loss.item():.4f}')
 
             epoch_loss += loss.item()
+            if ite and ite%200==0:
+                save_images(y_train,pred_train,"outputs",i,ite)
 
         with torch.no_grad():
             model.eval()
@@ -141,7 +145,7 @@ def get_config():
     config = {
         "epoch": 1,
         'input_dim': 1,
-        'batch_size': 2,
+        'batch_size': 8,
         'padding': 1,
         'lr': 0.001,
         'device': "cuda:0" if torch.cuda.is_available() else "cup",
@@ -183,11 +187,11 @@ def main():
                           batch_first=config['batch_first'],
                           bias=config['bias']
                           )
-
+    model= model.to(device)
     # ******************  optimizer ***********************#
     optimizer = optim.Adam(model.parameters(), lr=config['lr'])
     # ****************** start training ************************#
-    train(model, train_dataloader, valid_dataloader, criterion, optimizer)
+    train(model, train_dataloader, valid_dataloader, criterion, optimizer,device)
     # print(next(iter(train_dataloader))[0].shape)
 
 

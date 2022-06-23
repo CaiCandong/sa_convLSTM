@@ -68,7 +68,7 @@ class Encode2Decode(nn.Module):
             y = y.permute(1, 0, 2, 3, 4)
         b, _, _, h, w = x.shape
         if hidden_state is None:
-            hidden_state = self._init_hidden(batch_size=b, image_size=(h // 4, w // 4))
+            hidden_state = self._init_hidden(batch_size=b, image_size=(h // 4, w // 4),device=x.device)
         seq_len, horizon = x.size(1), y.size(1)
         predict_temp_de = []
         frames = torch.cat([x, y], dim=1)
@@ -88,10 +88,10 @@ class Encode2Decode(nn.Module):
         predict_temp_de = predict_temp_de[:, seq_len - 1:, :, :, :]
         return predict_temp_de
 
-    def _init_hidden(self, batch_size, image_size):
+    def _init_hidden(self, batch_size, image_size,device):
         init_states = []
         for i in range(self.num_layers):
-            init_states.append(self.cell_list[i].init_hidden(batch_size, image_size))
+            init_states.append(self.cell_list[i].init_hidden(batch_size, image_size,device))
         return init_states
 
 

@@ -119,11 +119,11 @@ class SAConvLSTMCell(nn.Module):
         return h_next, c_next, m_next
 
     # initialize h, c, m
-    def init_hidden(self, batch_size, image_size):
+    def init_hidden(self, batch_size, image_size,device):
         height, width = image_size
-        h = torch.zeros(batch_size, self.hidden_dim, height, width)
-        c = torch.zeros(batch_size, self.hidden_dim, height, width)
-        m = torch.zeros(batch_size, self.hidden_dim, height, width)
+        h = torch.zeros(batch_size, self.hidden_dim, height, width,device=device)
+        c = torch.zeros(batch_size, self.hidden_dim, height, width,device=device)
+        m = torch.zeros(batch_size, self.hidden_dim, height, width,device=device)
         return h, c, m
 
 
@@ -167,7 +167,7 @@ class SAConvLSTM(nn.Module):
         if hidden_state is not None:
             raise NotImplementedError
         else:
-            hidden_state = self._init_hidden(batch_size=b, image_size=(h, w))
+            hidden_state = self._init_hidden(batch_size=b, image_size=(h, w),device=input_tensor.device)
         layer_output_list = []
         last_state_list = []
         seq_len = input_tensor.size(1)
@@ -187,10 +187,10 @@ class SAConvLSTM(nn.Module):
             last_state_list = last_state_list[-1:]
         return layer_output_list, last_state_list
 
-    def _init_hidden(self, batch_size, image_size):
+    def _init_hidden(self, batch_size, image_size,device):
         init_states = []
         for i in range(self.num_layers):
-            init_states.append(self.cell_list[i].init_hidden(batch_size, image_size))
+            init_states.append(self.cell_list[i].init_hidden(batch_size, image_size,device))
         return init_states
 
     @staticmethod

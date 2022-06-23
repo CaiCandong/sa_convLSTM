@@ -33,7 +33,7 @@ class MovingMNIST(data.Dataset):
     training_file = 'moving_mnist_train.pt'
     test_file = 'moving_mnist_test.pt'
 
-    def __init__(self, root, train=True, split=1000, transform=None, target_transform=None, download=False, seq_len=10,
+    def __init__(self, root, train=True, split=1000, transform=None, target_transform=None, download=True, seq_len=10,
                  horizon=10):
         self.root = os.path.expanduser(root)
         self.transform = transform

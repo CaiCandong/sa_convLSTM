@@ -1,5 +1,13 @@
 # implement  self-attention convolution LSTM
 
+# 代码实验效果
+train loss 0.013609007415620404
+valid loss 0.01899987788250049
+
+![训练曲线](./outputs/train_val_loss_curve_epoch_9.png)
+![效果](./outputs/009_00800.png)
+
+
 ## Conv LSTM
 
 ![base](./model/pics/conv_lstm_cell.png)

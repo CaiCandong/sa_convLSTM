@@ -1,1 +1,6 @@
 .idea
+data_loader/MovingMNIST.py
+data_loader/.data/mnist/processed/moving_mnist_test.pt
+data_loader/.data/mnist/processed/moving_mnist_train.pt
+data_loader/.data/mnist/raw/mnist_test_seq.npy
+data_loader/__pycache__/MovingMNIST.cpython-38.pyc
